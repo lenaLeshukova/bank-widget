@@ -1,4 +1,4 @@
-from masks import get_mask_card_number, get_mask_account
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(data: str) -> str:
@@ -20,9 +20,22 @@ def mask_account_card(data: str) -> str:
     return f"{name} {masked_number}"
 
 
-# Примеры использования (для проверки):
+def get_date(date_str: str) -> str:
+    """Принимает строку с датой в формате '2024-03-11T02:26:18.671407' и возвращает 'ДД.ММ.ГГГГ'."""
+    # Извлекаем год, месяц и день по индексам
+    year = date_str[0:4]
+    month = date_str[5:7]
+    day = date_str[8:10]
+
+    return f"{day}.{month}.{year}"
+
+# Пример работы:
+# Вход: "2024-03-11T02:26:18.671407"
+# Выход: "11.03.2024"
+
+
+# Примеры использования:
 if __name__ == "__main__":
     print(mask_account_card("Visa Platinum 7000792289606361"))
     print(mask_account_card("Maestro 1596837868705199"))
     print(mask_account_card("Счет 73654108430135874305"))
-
