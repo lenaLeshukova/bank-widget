@@ -5,9 +5,24 @@ def filter_by_state(data: list[dict], state: str = 'EXECUTED') -> list[dict]:
     data: Список словарей с данными о транзакциях.
     state: Строка для фильтрации (по умолчанию 'EXECUTED').
     return: Новый список словарей, у которых ключ state
- соответствует указанному значению
+    соответствует указанному значению
     """
     return [item for item in data if item.get('state') == state]
+
+
+def sort_by_date(data: list[dict], descending: bool = True) -> list[dict]:
+    """
+    Сортирует список словарей по дате (ключ 'date')
+    data: Список словарей с данными о транзакциях
+    descending: Порядок сортировки (True для убывания, False для возрастания).
+    return: Новый список словарей, отсортированный по дате.
+    """
+    # Сортируем, используя ключ сортировки
+    return sorted(
+        data,
+        key=lambda item: item['date'],
+        reverse=descending
+    )
 
 
 # Пример использования:
@@ -24,3 +39,9 @@ if __name__ == "__main__":
 
     # Вызов с параметром 'CANCELED'
     print(filter_by_state(data, 'CANCELED'))
+
+    # Сортировка по убыванию (по умолчанию)
+    sorted_data = sort_by_date(data)
+
+    for item in sorted_data:
+        print(item)
