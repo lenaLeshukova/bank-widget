@@ -1,10 +1,11 @@
 import pytest
-from src.masks import get_mask_card_number, get_mask_account
+
 
 # Фикстура для примера номера карты
 @pytest.fixture
 def sample_card_number():
     return "7000792289606361"
+
 
 # Фикстура для примера номера счета
 @pytest.fixture

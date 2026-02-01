@@ -1,4 +1,5 @@
 import pytest
+
 from src.widget import mask_account_card, get_date
 
 
@@ -40,6 +41,7 @@ def test_get_date_invalid_format():
     with pytest.raises(IndexError):
         get_date("2024-03")  # Слишком короткая строка вызовет ошибку индекса
 
+
 @pytest.mark.parametrize("invalid_date, error_msg", [
     ("2024-13-11T02:26:18", "Месяц должен быть в диапазоне от 01 до 12"),
     ("2024-00-11T02:26:18", "Месяц должен быть в диапазоне от 01 до 12"),
@@ -50,9 +52,10 @@ def test_get_date_month_validation(invalid_date, error_msg):
     with pytest.raises(ValueError, match=error_msg):
         get_date(invalid_date)
 
+
 @pytest.mark.parametrize("valid_date, expected", [
-    ("2024-01-11T02:26:18", "11.01.2024"), # Январь
-    ("2024-12-31T02:26:18", "31.12.2024"), # Декабрь
+    ("2024-01-11T02:26:18", "11.01.2024"),  # Январь
+    ("2024-12-31T02:26:18", "31.12.2024"),  # Декабрь
 ])
 def test_get_date_month_boundaries(valid_date, expected):
     """Проверка работы на границах допустимых месяцев"""

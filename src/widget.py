@@ -35,6 +35,7 @@ def get_date(date_str: str) -> str:
 
     return f"{day}.{month}.{year}"
 
+
 # Пример работы:
 # Вход: "2024-03-11T02:26:18.671407"
 # Выход: "11.03.2024"
