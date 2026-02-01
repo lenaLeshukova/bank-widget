@@ -38,7 +38,7 @@ def test_get_date(date_raw, expected_date):
 
 def test_get_date_invalid_format():
     """Пример теста на некорректную длину строки даты"""
-    with pytest.raises(IndexError):
+    with pytest.raises(ValueError):
         get_date("2024-03")  # Слишком короткая строка вызовет ошибку индекса
 
 
