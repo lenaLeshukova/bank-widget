@@ -22,10 +22,16 @@ def mask_account_card(data: str) -> str:
 
 def get_date(date_str: str) -> str:
     """Принимает строку с датой в формате '2024-03-11T02:26:18.671407' и возвращает 'ДД.ММ.ГГГГ'."""
+    if len(date_str) < 10:
+        raise ValueError("Некорректный формат даты")
     # Извлекаем год, месяц и день по индексам
     year = date_str[0:4]
     month = date_str[5:7]
     day = date_str[8:10]
+
+    # Проверка диапазона месяца
+    if not (1 <= int(month) <= 12):
+        raise ValueError("Месяц должен быть в диапазоне от 01 до 12")
 
     return f"{day}.{month}.{year}"
 
