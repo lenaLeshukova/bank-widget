@@ -12,6 +12,7 @@ def filter_by_currency(transactions, currency_code):
             # Пропускаем транзакцию, если структура данных неверна
             continue
 
+
 # Пример использования
 
 transactions = [
@@ -44,6 +45,7 @@ def transaction_descriptions(transactions):
         # Извлекаем описание, если ключа нет — вернется None или пустая строка
         yield transaction.get("description", "Описание отсутствует")
 
+
 #  Пример использования
 
 # Список транзакций
@@ -61,7 +63,7 @@ for _ in range(5):
     try:
         print(next(descriptions))
     except StopIteration:
-        break # Останавливаем цикл, если транзакции закончились
+        break  # Останавливаем цикл, если транзакции закончились
 
 
 def card_number_generator(start, end):
