@@ -28,17 +28,22 @@ def log(filename=None):
                         f.write(log_message + "\n")
                 else:
                     print(log_message)
+
         return wrapper
+
     return decorator
+
 
 # Примеры использования
 @log(filename="mylog.txt")
 def my_function(x, y):
     return x + y
 
+
 @log()
 def div(x, y):
     return x / y
+
 
 my_function(1, 2)
 
