@@ -34,3 +34,44 @@ def transactions_data():
         }
     ]
 
+
+@pytest.fixture
+def sample_transactions():
+    """Фикстура с тестовыми данными транзакций."""
+    return [
+        {"id": 1, "state": "EXECUTED", "amount": "100.00"},
+        {"id": 2, "state": "CANCELED", "amount": "200.00"}
+    ]
+
+
+@pytest.fixture
+def sample_transactions():
+    """Фикстура с корректными данными."""
+    return [
+        {"id": 1, "state": "EXECUTED"},
+        {"id": 2, "state": "CANCELED"}
+    ]
+
+
+@pytest.fixture
+def empty_file_content():
+    """Фикстура для имитации абсолютно пустого файла."""
+    return ""
+
+
+@pytest.fixture
+def not_list_content():
+    """Фикстура для имитации JSON, который не является списком."""
+    return '{"error": "this is a dict, not a list"}'
+
+
+@pytest.fixture
+def mock_api_response():
+    """Фикстура для создания типичного успешного ответа от API."""
+    return {
+        "success": True,
+        "query": {"from": "USD", "to": "RUB", "amount": 100},
+        "info": {"timestamp": 1678900000, "rate": 75.5},
+        "date": "2023-03-15",
+        "result": 7550.0  # Ожидаемый результат конвертации
+    }
