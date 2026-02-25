@@ -20,7 +20,7 @@ if not os.path.exists(log_directory):
 log_file = os.path.join(log_directory, "masks.log")
 
 # Настройка Логера
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("masks")
 logger.setLevel(logging.DEBUG)
 
 # FileHandler с режимом 'w' для перезаписи при каждом запуске
