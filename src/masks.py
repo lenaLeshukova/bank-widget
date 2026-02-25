@@ -36,12 +36,12 @@ def get_mask_card_number(card_number: str) -> str:
     card_str = str(card_number)
     if not card_str.isdigit():
         error_msg = "Номер карты должен содержать только цифры"
-        logger.error(f"Ошибка валидации: {error_msg}")
+        logger.error(f"Ошибка: номер карты содержит не только цифры: {card_number}")
         raise ValueError(error_msg)
 
     if len(card_str) != 16:
         error_msg = "Номер карты должен содержать 16 цифр"
-        logger.error(f"Ошибка валидации: {error_msg}")
+        logger.error(f"Ошибка: неверная длина номера карты ({len(card_str)} вместо 16)")
         raise ValueError(error_msg)
 
     first_6 = card_str[:6]
@@ -60,7 +60,7 @@ def get_mask_account(account_number: str) -> str:
     account_str = str(account_number)
     if not account_str.isdigit():
         error_msg = "Номер счета должен содержать только цифры"
-        logger.error(f"Ошибка валидации: {error_msg}")
+        logger.error(f"Ошибка: номер счета содержит не только цифры: {account_number}")
         raise ValueError(error_msg)
     if len(account_str) < 4:
         error_msg = "Номер счета слишком короткий"
@@ -82,3 +82,8 @@ if __name__ == "__main__":
         # print(get_mask_card_number("123"))
     except Exception as e:
         print(f"Произошла ошибка: {e}")
+
+    try:
+        get_mask_card_number("1234ABC") # Буквы вместо цифр
+    except ValueError:
+        pass # Ошибка уже улетела в лог
