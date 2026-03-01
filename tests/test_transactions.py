@@ -1,6 +1,7 @@
-import pytest
-import pandas as pd
 from unittest.mock import patch, mock_open
+
+import pandas as pd
+
 from src.transactions import read_transactions_csv, read_transactions_excel
 
 
