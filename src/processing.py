@@ -1,3 +1,7 @@
+import re
+from collections import Counter
+
+
 def filter_by_state(data: list[dict], state: str = 'EXECUTED') -> list[dict]:
     """
     Фильтрует список словарей по значению ключа 'state'.
@@ -25,23 +29,52 @@ def sort_by_date(data: list[dict], descending: bool = True) -> list[dict]:
     )
 
 
+def filter_by_query(data: list[dict], search_query: str) -> list[dict]:
+    """
+    Фильтрует список словарей по наличию строки поиска в описании (description).
+    Использует регулярные выражения для гибкого поиска.
+    """
+    # Экранируем спецсимволы в запросе и включаем игнорирование регистра. Используем re.escape, чтобы если в поиске придет что-то вроде "+", программа не выдала ошибку.
+    pattern = re.compile(re.escape(search_query), re.IGNORECASE)
+
+    return [
+        item for item in data
+        if item.get('description') and pattern.search(item['description'])
+    ]
+
+
+def count_operations_by_category(data: list[dict], categories: list[str]) -> dict[str, int]:
+    """
+    Подсчитывает количество операций в каждой из указанных категорий.
+    Категория ищется в поле 'description'.
+    """
+    # Извлекаем все описания из данных, которые есть в списке категорий
+    descriptions_in_data = [
+        item.get("description")
+        for item in data
+        if item.get("description") in categories
+    ]
+
+    # Считаем вхождения с помощью Counter
+    counts = Counter(descriptions_in_data)
+
+    # Формируем итоговый словарь, чтобы в нем были все запрашиваемые категории (даже с 0)
+    return {category: counts.get(category, 0) for category in categories}
+
+
 # Пример использования:
 if __name__ == "__main__":
     data = [
-        {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
-        {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
-        {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
-        {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}
+        {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03', 'description': 'Перевод организации'},
+        {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30', 'description': 'Перевод с карты на карту'},
+        {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12', 'description': 'Оплата услуг'},
     ]
 
-    # Вызов со значением по умолчанию
-    print(filter_by_state(data))
+    categories = ['Перевод организации', 'Оплата услуг', 'Внешний перевод']
 
-    # Вызов с параметром 'CANCELED'
-    print(filter_by_state(data, 'CANCELED'))
+    result = count_operations_by_category(data, categories)
+    print(result)
+    # Вывод: {'Перевод организации': 2, 'Оплата услуг': 1, 'Внешний перевод': 0}
 
-    # Сортировка по убыванию (по умолчанию)
-    sorted_data = sort_by_date(data)
-
-    for item in sorted_data:
-        print(item)
+    # Пример поиска "перевод" (найдет и "Перевод", и "перевод")
+    print(filter_by_query(data, "перевод"))

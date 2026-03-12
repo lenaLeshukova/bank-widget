@@ -75,3 +75,36 @@ def mock_api_response():
         "date": "2023-03-15",
         "result": 7550.0  # Ожидаемый результат конвертации
     }
+
+
+@pytest.fixture
+def sample_data():
+    """Фикстура с тестовым набором данных о транзакциях."""
+    return [
+        {'id': 1, 'state': 'EXECUTED', 'date': '2023-01-01', 'description': 'Перевод организации'},
+        {'id': 2, 'state': 'CANCELED', 'date': '2023-05-01', 'description': 'Оплата услуг'},
+        {'id': 3, 'state': 'EXECUTED', 'date': '2023-03-01', 'description': 'Перевод с карты на карту'},
+        {'id': 4, 'state': 'EXECUTED', 'date': '2022-12-31', 'description': 'Внешний перевод'},
+    ]
+
+
+@pytest.fixture
+def mock_transactions():
+    """Фикстура с тестовыми данными в формате JSON"""
+    return [
+        {
+            "date": "2019-12-08T22:46:21.931771",
+            "description": "Открытие вклада",
+            "state": "EXECUTED",
+            "operationAmount": {"amount": "41421.40", "currency": {"name": "руб.", "code": "RUB"}},
+            "to": "Счет 64686453677572779454"
+        },
+        {
+            "date": "2018-07-18T12:00:00.000000",
+            "description": "Перевод организации",
+            "state": "EXECUTED",
+            "operationAmount": {"amount": "8390.00", "currency": {"name": "руб.", "code": "RUB"}},
+            "from": "Visa Platinum 7492651234567202",
+            "to": "Счет 00000000000000000034"
+        }
+    ]
